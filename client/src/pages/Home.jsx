@@ -13,7 +13,7 @@ import { useLocation } from "react-router-dom";
 
 
 
-export default function Blog() {
+export default function Blog() { 
     const [posts, setPosts] = useState([]);
 
     const category = useLocation().search
