@@ -7,8 +7,9 @@ import FeaturedPost from '../components/FeaturedPost';
 
 import {theme} from '../theme';
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { HOST } from "../config"
 
 
 
@@ -23,9 +24,8 @@ export default function Blog() {
 
     const fetchData = async () => {
         try {
-            const res = await axios.get(`/api/allposts${category}`);
+            const res = await axios.get(`${HOST}/api/allposts${category}`);
             setPosts(res.data.data)
-            
         } catch (err) {
             console.log(err)
         }
@@ -40,7 +40,6 @@ export default function Blog() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg" sx={{paddingTop: 20}}>
-        
         <main>
           <Grid container spacing={4}>
             {posts.filter((item, idx) => idx < 12).map((post) => (
@@ -49,7 +48,6 @@ export default function Blog() {
           </Grid>
         </main>
       </Container>
-     
     </ThemeProvider>
   );
 }
