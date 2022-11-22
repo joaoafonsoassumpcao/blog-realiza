@@ -11,12 +11,23 @@ import (
 )
 
 func main() {
-	database.Connect()
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("GOMODE") == "DEV" {
+		err := godotenv.Load(".env.dev")
+
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
+	} else {
+		err := godotenv.Load(".env")
+
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
+
 	}
+
+	database.Connect()
 
 	port := os.Getenv("PORT")
 	app := fiber.New()
