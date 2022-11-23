@@ -34,6 +34,11 @@ func main() {
 	app := fiber.New()
 	app.Use(cors.New())
 	routes.Setup(app)
-	app.Listen(":" + port)
+	if os.Getenv("GOMODE") == "DEV" {
+		app.Listen(":" + port)
+	} else {
+
+		app.ListenTLS(":"+port, os.Getenv("CERTFILE"), os.Getenv("KEYFILE"))
+	}
 
 }

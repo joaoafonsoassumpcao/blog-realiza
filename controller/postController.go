@@ -42,8 +42,6 @@ func GetAllPosts(c *fiber.Ctx) error {
 		database.DB.Where("category = ?", category).Preload("User").Order("id DESC").Find(&getBlog)
 	}
 
-	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
-
 	return c.Status(200).JSON(fiber.Map{
 		"data": getBlog,
 	})
