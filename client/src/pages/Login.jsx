@@ -118,7 +118,7 @@ const Login = () => {
               </Grid>
               <Grid item>
                 <Link href="/register" variant="body2">
-                  {"Não tem uma conta? Cadastre-se"}
+                  "Não tem uma conta? Cadastre-se"
                 </Link>
               </Grid>
             </Grid>

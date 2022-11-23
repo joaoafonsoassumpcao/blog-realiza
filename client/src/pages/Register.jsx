@@ -26,7 +26,6 @@ const Register = () => {
     });
 
 
-
     const [err, setError] = React.useState("");
 
     const navigate = useNavigate()
