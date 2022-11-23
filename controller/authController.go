@@ -63,7 +63,9 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
+	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
 	c.Status(201)
+
 	return c.JSON(fiber.Map{
 		"message": "Usuário cadastrado com sucesso",
 		"user":    user,

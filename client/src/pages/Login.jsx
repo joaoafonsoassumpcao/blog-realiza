@@ -9,19 +9,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {  ThemeProvider } from '@mui/material/styles';
 
 import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { theme } from '../theme';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-
-
-
-
-
-
 
 
 
@@ -31,6 +24,7 @@ const Login = () => {
         "email": "",
         "password": ""
     });
+
 
 
 
@@ -47,26 +41,14 @@ const Login = () => {
     }
     
 
-    const [openModal, setOpenModal] = React.useState(false);
 
-    const ConfirmDialog = () => {
-        
-        return (
-          <Dialog open={openModal} aria-labelledby="dialog-title" aria-describedby="dialog-description">
-            <DialogTitle id="dialog-title">Confirm</DialogTitle>
-            <DialogContent id="dialog-description">
-              <DialogContentText>Are you sure you want to delete this file?</DialogContentText>
-            </DialogContent>
-          </Dialog>
-        )
-      }
+
 
     const handleSubmit = async e => {
         e.preventDefault();
         try {
             await login(inputs)
             navigate("/");
-            setOpenModal(true)
 
         } catch (err) {
             setError(err.response.data.message);
@@ -135,7 +117,7 @@ const Login = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Não tem uma conta? Cadastre-se"}
                 </Link>
               </Grid>

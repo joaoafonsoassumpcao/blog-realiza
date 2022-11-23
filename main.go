@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joaoafonsoassumpcao/blogrealiza/database"
 	"github.com/joaoafonsoassumpcao/blogrealiza/routes"
 	"github.com/joho/godotenv"
@@ -31,6 +32,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	app := fiber.New()
+	app.Use(cors.New())
 	routes.Setup(app)
 	app.Listen(":" + port)
 

@@ -24,6 +24,8 @@ func CreatePost(c *fiber.Ctx) error {
 		})
 	}
 
+	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
+
 	return c.JSON(fiber.Map{
 		"message": "Post created",
 	})
@@ -40,7 +42,7 @@ func GetAllPosts(c *fiber.Ctx) error {
 		database.DB.Where("category = ?", category).Preload("User").Order("id DESC").Find(&getBlog)
 	}
 
-	//c.Response().Header.Set("Access-Control-Allow-Origin", "*")
+	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
 
 	return c.Status(200).JSON(fiber.Map{
 		"data": getBlog,
@@ -51,6 +53,8 @@ func GetPost(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params("id"))
 	var getBlog models.Blog
 	database.DB.Where("id = ?", id).Preload("User").First(&getBlog)
+
+	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
 
 	return c.Status(200).JSON(fiber.Map{
 		"data": getBlog,
@@ -80,6 +84,8 @@ func UniquePost(c *fiber.Ctx) error {
 	var getBlog []models.Blog
 	database.DB.Model(&models.Blog{}).Where("user_id = ?", id).Preload("User").Find(&getBlog)
 
+	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
+
 	return c.Status(200).JSON(fiber.Map{
 		"data": getBlog,
 	})
@@ -98,6 +104,8 @@ func DeletePost(c *fiber.Ctx) error {
 			"message": "Post not found",
 		})
 	}
+
+	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
 
 	return c.Status(200).JSON(fiber.Map{
 		"message": "Post deleted",

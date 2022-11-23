@@ -31,6 +31,7 @@ func Upload(c *fiber.Ctx) error {
 		}
 
 	}
+	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
 
 	return c.Status(200).JSON(fiber.Map{
 		"message": "File uploaded successfully",
