@@ -24,7 +24,9 @@ export default function Blog() {
 
     const fetchData = async () => {
         try {
-            const res = await axios.get(`${HOST}/api/allposts${category}`);
+            const axiosInstance = axios.create({ baseURL: HOST });
+            axiosInstance.defaults.headers.get["Access-Control-Allow-Origin"] = "*"
+            const res = await axiosInstance.get(`${HOST}/api/allposts${category}`, );
             setPosts(res.data.data)
         } catch (err) {
             console.log(err)
