@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axios";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import { AuthContext } from "../context/authContext";
@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { HOST } from "../config"
 
 
 const Write = () => {
@@ -34,8 +35,14 @@ const Write = () => {
         try {
             const formData = new FormData();
             formData.append("image", image);
-            const res = await axios.post("/api/uploads", formData);
+
+            const userStr = localStorage.getItem('user')
+            const userObj = JSON.parse(userStr)
+            axiosInstance.defaults.headers.common.Authorization = `Bearer ${userObj.access_token}`
+
+            const res = await axiosInstance.post(`${HOST}/api/uploads`, formData);
             return res.data.url;
+            
         } catch (err) {
             console.log(err);
         }
@@ -48,8 +55,13 @@ const Write = () => {
         
         try {
             setUser(userid);
-            state ? await axios.put(`/api/updatepost/${state.id}`, {title, description: value, category, user_id: user, image: imageUrl, resumo}) 
-            : await axios.post("/api/post", {title, description: value, category, user_id: user, image: imageUrl, date: moment(Date.now()).format("DD/MM/YYYY"), resumo});
+            const userStr = localStorage.getItem('user')
+            const userObj = JSON.parse(userStr)
+            axiosInstance.defaults.headers.common.Authorization = `Bearer ${userObj.access_token}`
+
+            state ? await axiosInstance.put(`${HOST}/api/updatepost/${state.id}`, {title, description: value, category, user_id: user, image: imageUrl, resumo}) 
+            : await axiosInstance.post(`${HOST}/api/post`, {title, description: value, category, user_id: user, image: imageUrl, date: moment(Date.now()).format("DD/MM/YYYY"), resumo});
+            
             alert("Post criado com sucesso!"); 
             window.location.replace("/");
         } catch (err) {

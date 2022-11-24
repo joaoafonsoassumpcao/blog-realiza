@@ -13,6 +13,7 @@ import CardMedia from '@mui/material/CardMedia';
 //import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
+import {HOST} from "../config"
 
 
 
@@ -31,7 +32,7 @@ const Single = () => {
 
     const fetchData = async () => {
         try {
-            const res = await axios.get(`/api/post/${postId}`);
+            const res = await axios.get(`${HOST}/api/post/${postId}`);
             setPost(res.data.data)
             console.log(res.data.data)
         } catch (err) {
