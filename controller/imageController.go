@@ -2,6 +2,7 @@ package controller
 
 import (
 	"math/rand"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -33,9 +34,17 @@ func Upload(c *fiber.Ctx) error {
 	}
 	c.Response().Header.Set("Access-Control-Allow-Origin", "*")
 
+	url := ""
+
+	if os.Getenv("GOMODE") == "DEV" {
+		url = "http://localhost:3030/api/uploads/"
+	} else {
+		url = "https://blog.faculdaderealiza.com.br:3030/api/uploads"
+	}
+
 	return c.Status(200).JSON(fiber.Map{
 		"message": "File uploaded successfully",
 		"file":    fileName,
-		"url":     "http://localhost:3030/api/uploads/" + fileName,
+		"url":     url + fileName,
 	})
 }
