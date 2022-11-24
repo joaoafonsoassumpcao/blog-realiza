@@ -107,7 +107,7 @@ const Login = () => {
             >
               Entrar
             </Button>
-            <Grid container>
+            {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Esqueceu a senha?
@@ -118,7 +118,7 @@ const Login = () => {
                   "Não tem uma conta? Cadastre-se"
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Box>
         </Box>
       </Container>
