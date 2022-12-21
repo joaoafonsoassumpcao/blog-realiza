@@ -113,8 +113,30 @@ func Login(c *fiber.Ctx) error {
 	// c.Cookie(&cookie)
 
 	return c.Status(200).JSON(fiber.Map{
-		"message": "Logado com sucesso", "user": user, "access_token": token})
+		"message": "Logado com sucesso", "user": user, "token": token})
 
+}
+
+func CurrentUser(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
+	claims := &Claims{}
+	token, err := jwt.ParseWithClaims(cookie, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		return c.Status(401).JSON(fiber.Map{
+			"message": "Unauthorized",
+		})
+	} else if !token.Valid {
+		return c.Status(401).JSON(fiber.Map{
+			"message": "Unauthorized",
+		})
+	} else {
+		var user models.User
+		database.DB.Where("id=?", claims.Issuer).First(&user)
+		return c.Status(200).JSON(fiber.Map{
+			"message": "Usuário logado", "user": user})
+	}
 }
 
 // function to clear cookies

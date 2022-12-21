@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -17,17 +18,21 @@ func GenerateJwt(issuer string) (string, error) {
 	return claims.SignedString([]byte(SecretKey))
 }
 
-func ParseJwt(cookie string) (string, error) {
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+func ParseJwt(tokenStr string) (string, error) {
+	fmt.Println("tokenStr", tokenStr)
+	token, err := jwt.ParseWithClaims(tokenStr, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(SecretKey), nil
 	})
+	fmt.Println("token, err", token, err)
 
 	if err != nil || !token.Valid {
+		fmt.Println("aqui", err, token.Valid)
 		return "", err
 	}
 
 	claims, ok := token.Claims.(*jwt.StandardClaims)
 	if !ok {
+		fmt.Println("aqui 1")
 		return "", err
 	}
 

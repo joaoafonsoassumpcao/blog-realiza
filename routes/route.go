@@ -16,6 +16,7 @@ func Setup(app *fiber.App) {
 	app.Static("/api/uploads", "./uploads")
 	app.Use(middleware.IsAuthenticated)
 	app.Post("/api/logout", controller.LogOut)
+	app.Post("/api/me", controller.CurrentUser)
 	app.Post("/api/post", controller.CreatePost)
 	app.Put("/api/updatepost/:id", controller.UpdatePost)
 	app.Delete("/api/deletepost/:id", controller.DeletePost)

@@ -10,8 +10,10 @@ import (
 
 func IsAuthenticated(c *fiber.Ctx) error {
 	bearerToken := c.Get("Authorization")
-	fmt.Println(bearerToken)
+
 	onlyToken := strings.Split(bearerToken, " ")
+	fmt.Println("only token", onlyToken)
+
 	if len(onlyToken) > 1 {
 		if _, err := util.ParseJwt(onlyToken[1]); err != nil {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
