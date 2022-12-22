@@ -112,7 +112,10 @@ func main() {
 
 	port := os.Getenv("PORT")
 	app := fiber.New()
-	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "https://blog-realiza-front.vercel.app",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 	app.Use(logger.New())
 	routes.Setup(app)
 	if os.Getenv("GOMODE") == "DEV" {
