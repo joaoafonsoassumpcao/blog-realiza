@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"os"
-	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -114,19 +113,11 @@ func main() {
 	port := os.Getenv("PORT")
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		Next:         nil,
-		AllowOrigins: "*",
-		AllowMethods: strings.Join([]string{
-			fiber.MethodGet,
-			fiber.MethodPost,
-			fiber.MethodHead,
-			fiber.MethodPut,
-			fiber.MethodDelete,
-			fiber.MethodPatch,
-		}, ","),
-		AllowHeaders:     "",
-		AllowCredentials: false,
-		ExposeHeaders:    "",
+		AllowOrigins:     "*",
+		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH",
+		AllowHeaders:     "*",
+		AllowCredentials: true,
+		ExposeHeaders:    "*",
 		MaxAge:           0,
 	}))
 	app.Use(logger.New())
